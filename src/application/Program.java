@@ -3,6 +3,7 @@ package application;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Program {
             for (int i = 0; i < N; i++) {
                 do {
                     System.out.print("Enter days of the week: ");
-                    daysOfTheWeek = sc.next();
+                    daysOfTheWeek = sc.next().toUpperCase();
                     if (daysOfTheWeek.equals("SUNDAY")) {
                         System.out.println("This day is not available. Try again\n");
                     }
@@ -50,6 +51,7 @@ public class Program {
             } 
 
             System.out.println("Grade:\n");
+            Collections.sort(list);
             for (SchoolGrade schoolGrade : list) {
                 System.out.println(schoolGrade);
             }
@@ -62,17 +64,18 @@ public class Program {
                 String classes = sc.next();
 
                 for (int i = 0; i < list.size(); i++) {
-                    list.removeIf(x -> x.getClasses().equals(classes));
+                    list.removeIf(x -> x.getClasses().equalsIgnoreCase(classes));
                 }
                 
                 System.out.println("\nupdatedGrade:\n");
+                Collections.sort(list);
                 for (SchoolGrade schoolGrade : list) {
                     System.out.println(schoolGrade);
                 }
             }
         } 
         catch (ParseException e) {
-            System.out.println("Invalid date format");
+            System.out.println("Invalid hour format");
         }
         catch (DomainException e) {
             System.out.println(e.getMessage());

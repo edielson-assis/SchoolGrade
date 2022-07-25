@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import model.enums.DaysOfTheWeek;
 import model.exceptions.DomainException;
 
-public class SchoolGrade {
+public class SchoolGrade implements Comparable<SchoolGrade> {
     
     private String classes;
     private Date initialHour;
@@ -71,6 +71,11 @@ public class SchoolGrade {
         long diff = lastHour.getTime() - initialHour.getTime();
         TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS);
         return (diff / (60 * 1000) % 60);
+    }
+
+    @Override
+    public int compareTo(SchoolGrade other) {
+        return daysOfTheWeek.compareTo(other.daysOfTheWeek);
     }
 
     @Override
