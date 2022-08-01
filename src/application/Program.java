@@ -15,7 +15,8 @@ import model.exceptions.DomainException;
 
 public class Program {
 
-    private static String daysOfTheWeek;
+    public static String daysOfTheWeek;
+    public static String classes;
     
     public static void main(String[] args) {
 
@@ -38,7 +39,7 @@ public class Program {
                     else {
                         System.out.print("Enter classes to register: ");
                         sc.nextLine();
-                        String classes = sc.nextLine();
+                        classes = sc.nextLine();
                         System.out.print("Enter initial hour(HH:mm): ");
                         Date initialHour = sdf.parse(sc.next());
                         System.out.print("Enter last hour(HH:mm): ");
@@ -60,15 +61,18 @@ public class Program {
             char resp = sc.next().charAt(0);
 
             if (resp == 'y') {
-                System.out.print("Which class will be remove? ");
-                String classes = sc.next();
+                System.out.print("Which class will be removed? ");
+                sc.nextLine();
+                classes = sc.nextLine();
 
-                for (int i = 0; i < list.size(); i++) {
-                    list.removeIf(x -> x.getClasses().equalsIgnoreCase(classes));
+                while (!hasClass(list, classes)) {
+                    System.out.print("\nThis class was not registered. Try again: ");
+                    classes = sc.nextLine();
                 }
+
+                list.removeIf(x -> x.getClasses().equalsIgnoreCase(classes));
                 
                 System.out.println("\nupdatedGrade:\n");
-                Collections.sort(list);
                 for (SchoolGrade schoolGrade : list) {
                     System.out.println(schoolGrade);
                 }
@@ -96,4 +100,9 @@ public class Program {
         
         sc.close();
     }
+
+    public static boolean hasClass(List<SchoolGrade> list, String classes) {
+		SchoolGrade schoolGrade = list.stream().filter(x -> x.getClasses().equalsIgnoreCase(classes)).findFirst().orElse(null);
+		return schoolGrade != null;
+	}
 }
